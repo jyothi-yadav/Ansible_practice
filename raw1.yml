@@ -1,0 +1,7 @@
+---
+ - hosts: ubuntu,172.31.87.154
+   become: true
+   gather_facts: no
+   tasks: 
+     - name: Installing python on ubuntu
+       raw: apt install python-minimal -y

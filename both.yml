@@ -1,0 +1,37 @@
+---
+ - hosts: all
+   become: true
+   tasks:
+     - name: Installing packages in redhat
+       yum:
+         name: ['git', 'docker', 'httpd']
+         state: present
+       when: ansible_os_family == "RedHat" 
+     - name: Installing packages in ubuntu
+       apt:
+         name: ['git', 'docker.io', 'apache2']
+         state: present
+       when: ansible_os_family == "Debian"  
+     - name: starting docker and httpd on redhat
+       service:
+         name: "{{item}}"
+         state: started
+         enabled: yes
+       with_items:
+         - docker
+         - httpd
+       when: ansible_os_family == "RedHat"
+     - name: starting docker and httpd on ubuntu
+       service:
+         name: "{{item}}"
+         state: started
+         enabled: yes
+       with_items:
+         - docker
+         - apache2
+       when: ansible_os_family == "Debian"
+     - name: copying code to deployment dir
+       copy:
+         src: /home/ubuntu/job/code/index.html
+         dest: /var/www/html
+         

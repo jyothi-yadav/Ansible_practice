@@ -1,0 +1,8 @@
+---
+ - hosts: all
+   become: true
+   tasks:
+     - include: red.yml
+       when: ansible_os_family == "RedHat"
+     - include: ubu.yml
+       when: ansible_os_family == "Debian"

@@ -1,0 +1,29 @@
+---
+ - hosts: ubuntu
+   become: true
+   tasks:
+     - name: Installing packages
+       apt:
+         name: ['git', 'docker.io', 'apache2']
+         state: present
+     - name: starting docker and apache2
+       service:
+         name: "{{item}}"
+         state: started
+         enabled: yes
+       with_items:
+        - docker
+        - apache2
+     - name: copying code to deployment dir
+       copy:
+         src: /home/ubuntu/job/code/index.html
+         dest: /var/www/html/
+       notify:
+         - restarting apache2 
+   handlers:
+     - name: restarting apache2
+       service:
+         name: apache2
+         state: restarted
+      
+

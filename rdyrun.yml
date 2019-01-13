@@ -1,0 +1,8 @@
+---
+ - hosts: amazon
+   become: true
+   tasks:
+     - name: git installing
+       yum: 
+         name: git
+         state: absent

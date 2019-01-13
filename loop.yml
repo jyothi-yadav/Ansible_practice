@@ -1,0 +1,16 @@
+---
+ - hosts: all
+   become: true
+   tasks:
+     - name: Installing packages
+       yum:
+         name: ['git', 'docker', 'httpd', 'java-1.8.0-openjdk-devel']
+         state: present
+       #   name: "{{item}}"
+       #   state: present
+       # with_items:
+       #   - git
+       #   - docker
+       #   - httpd
+       #   - java-1.8.0-openjdk-devel
+

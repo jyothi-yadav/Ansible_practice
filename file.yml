@@ -1,0 +1,28 @@
+---
+ - hosts: all
+   become: true
+   tasks:
+     - name: Installing java-1.8.0
+       yum:
+         name: java-1.8.0-openjdk-devel
+         state: present
+     - name: correcting java version
+       alternatives:
+         name: java
+         path: /usr/lib/jvm/jre-1.8.0-openjdk.x86_64/bin/java
+     - name: correcting javac version
+       alternatives:
+         name: javac
+         path: /usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/javac
+     - name: Installing git
+       yum:
+         name: git
+         state: present
+     - name: Installing docker
+       yum:
+         name: docker
+         state: present
+     - name: Installing apache
+       yum:
+         name: httpd
+         state: present

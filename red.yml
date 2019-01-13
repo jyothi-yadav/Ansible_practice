@@ -1,0 +1,9 @@
+---
+ - name: Installing HTTPD on redhat
+   yum:
+     name: ["git", "httpd"]
+     state: present
+ - name: Starting Apache server
+   service:
+     name: httpd
+     state: started
